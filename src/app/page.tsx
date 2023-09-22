@@ -11,60 +11,96 @@ import {
   ModalHeader,
 } from "@nextui-org/react";
 import { useState } from "react";
-import Todo from "./todo";
+import TodoList from "./components/todoList";
 
 export default function Home() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const [todos, setTodos] = useState([]);
+  const [todo, setTodo] = useState("");
+  const [todos, setTodos] = useState(Array);
+  const [addError, setAddError] = useState(false);
+
+  const changeTodo = (value: string) => {
+    setTodo(value);
+    setAddError(false);
+  };
+
+  const addTodo = (todo: string) => {
+    if (todo === "") {
+      setAddError(true);
+      return;
+    }
+
+    const updatedTodos = [...todos, todo];
+
+    setAddError(false);
+    setTodo("");
+    setTodos(updatedTodos);
+    onOpenChange();
+  };
+
+  const deleteTodo = (todoToDelete: string) => {
+    const newTodos = todos.filter((todo) => todo !== todoToDelete);
+    setTodos(newTodos);
+  };
 
   return (
-    <Card className="flex flex-col items-center gap-4">
-      <Button
-        className="w-5/6 text-white text-lg"
-        color="primary"
-        variant="shadow"
-        onPress={onOpen}
-      >
-        Add a new todo +
-      </Button>
+    <div className="flex flex-col items-center h-screen pt-36 bg-purple-500">
+      <Card className="w-4/12 p-11 bg-indigo-950 text-white">
+        <p className="text-center mb-10 text-5xl font-bold">Get things done!</p>
 
-      <div>
-        {todos ? (
-          todos.map((todo: string) => <Todo {...{ todo }} />)
-        ) : (
-          <p>There are no todos</p>
-        )}
-      </div>
+        <Button
+          className="text-3xl text-center p-6"
+          color="secondary"
+          variant="ghost"
+          onPress={onOpen}
+        >
+          Add a new todo +
+        </Button>
 
-      <Modal
-        backdrop="opaque"
-        isOpen={isOpen}
-        onOpenChange={onOpenChange}
-        size="2xl"
-        classNames={{
-          backdrop:
-            "bg-gradient-to-t from-zinc-900 to-zinc-900/10 backdrop-opacity-20",
-        }}
-      >
-        <ModalContent>
-          {(onClose) => (
-            <>
-              <ModalHeader className="flex flex-col gap-1">
-                Add Todo
-              </ModalHeader>
-              <ModalBody>
-                <Input label="Write your todo" />
-              </ModalBody>
-              <ModalFooter>
-                <Button color="danger" variant="light" onPress={onClose}>
-                  Close
-                </Button>
-                <Button color="primary">Action</Button>
-              </ModalFooter>
-            </>
-          )}
-        </ModalContent>
-      </Modal>
-    </Card>
+        <TodoList todos={todos} deleteTodo={deleteTodo} />
+
+        <Modal
+          backdrop="opaque"
+          isOpen={isOpen}
+          onOpenChange={onOpenChange}
+          size="2xl"
+          classNames={{
+            backdrop:
+              "bg-gradient-to-t from-zinc-900 to-zinc-900/10 backdrop-opacity-20",
+          }}
+        >
+          <ModalContent>
+            {(onClose) => (
+              <>
+                <ModalHeader className="flex flex-col gap-1">
+                  Add Todo
+                </ModalHeader>
+                <ModalBody>
+                  {addError ? (
+                    <p className="text-red-500 p-2 rounded-lg">
+                      Todo is missing!
+                    </p>
+                  ) : (
+                    ""
+                  )}
+                  <Input
+                    label="Write your todo"
+                    onChange={(value) => changeTodo(value.target.value)}
+                  />
+                </ModalBody>
+                <ModalFooter>
+                  <Button color="danger" variant="light" onPress={onClose}>
+                    Close
+                  </Button>
+                  <Button color="secondary" onClick={() => addTodo(todo)}>
+                    Action
+                  </Button>
+                </ModalFooter>
+              </>
+            )}
+          </ModalContent>
+        </Modal>
+      </Card>
+    </div>
   );
 }
