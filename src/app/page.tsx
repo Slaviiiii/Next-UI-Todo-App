@@ -1,4 +1,5 @@
 "use client";
+import React, { useState } from "react";
 import {
   Card,
   Input,
@@ -10,13 +11,12 @@ import {
   ModalBody,
   ModalHeader,
 } from "@nextui-org/react";
-import { useState } from "react";
 import TodoList from "./components/todoList";
 
 export default function Home() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [todo, setTodo] = useState("");
-  const [todos, setTodos] = useState(Array);
+  const [todos, setTodos] = useState([]);
   const [addError, setAddError] = useState(false);
 
   const changeTodo = (value: string) => {
@@ -24,13 +24,13 @@ export default function Home() {
     setAddError(false);
   };
 
-  const addTodo = (todo: string) => {
-    if (todo === "") {
+  const addTodo = (todoText: string) => {
+    if (todoText === "") {
       setAddError(true);
       return;
     }
 
-    const updatedTodos = [...todos, todo];
+    const updatedTodos: any = [...todos, todoText];
 
     setAddError(false);
     setTodo("");
@@ -41,6 +41,13 @@ export default function Home() {
   const deleteTodo = (todoToDelete: string) => {
     const newTodos = todos.filter((todo) => todo !== todoToDelete);
     setTodos(newTodos);
+  };
+
+  const editTodo = (oldTodo: string, newTodo: string) => {
+    const updatedTodos: any = todos.map((todo) =>
+      todo === oldTodo ? newTodo : todo
+    );
+    setTodos(updatedTodos);
   };
 
   return (
@@ -57,7 +64,7 @@ export default function Home() {
           Add a new todo +
         </Button>
 
-        <TodoList todos={todos} deleteTodo={deleteTodo} />
+        <TodoList todos={todos} deleteTodo={deleteTodo} editTodo={editTodo} />
 
         <Modal
           backdrop="opaque"
@@ -93,7 +100,7 @@ export default function Home() {
                     Close
                   </Button>
                   <Button color="secondary" onClick={() => addTodo(todo)}>
-                    Action
+                    Add Todo
                   </Button>
                 </ModalFooter>
               </>
