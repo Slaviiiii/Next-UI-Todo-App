@@ -1,4 +1,19 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+This todo app offers creating todos, edditing, removing and completing them.
+
+## Looks
+
+![image](https://github.com/Slaviiiii/Next-UI-Todo-App/assets/106228555/9c8bae00-ad53-42bc-8557-c6205dd43e4b)
+
+![image](https://github.com/Slaviiiii/Next-UI-Todo-App/assets/106228555/71a098a3-ee09-4ab0-9db9-a10f5710e6f2)
+
+![image](https://github.com/Slaviiiii/Next-UI-Todo-App/assets/106228555/4f2579f1-0a43-4963-84b2-2d3feb0e7a7c)
+
+![image](https://github.com/Slaviiiii/Next-UI-Todo-App/assets/106228555/04c8a9c7-51f8-4603-9833-c5249f9d5768)
+
+![image](https://github.com/Slaviiiii/Next-UI-Todo-App/assets/106228555/e621cd4f-6da6-4b7d-8451-bce74406adf6)
+
+![image](https://github.com/Slaviiiii/Next-UI-Todo-App/assets/106228555/353f58be-5274-407a-b657-7ba4dfcb8fee)
 
 ## Getting Started
 
