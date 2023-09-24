@@ -48,7 +48,7 @@ export default function Todo(props: any) {
   };
 
   return (
-    <div className="p-2 bg-secondary rounded-md mb-5 shadow-md flex items-center justify-between">
+    <div className="p-2 bg-secondary rounded-md mb-5 text-white shadow-md flex items-center justify-between">
       {isComplete ? (
         <span className="line-through">{props.todo}</span>
       ) : (
